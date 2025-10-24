@@ -1,0 +1,106 @@
+package lab5;
+
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.List;
+
+public class ViewStudentsPanel extends JPanel {
+    private JTable table;
+    private DefaultTableModel model;
+    private JTextField searchField;
+    private JButton refreshButton, searchButton, deleteButton;
+    private StudentManager manager;
+
+    public ViewStudentsPanel(StudentManager manager, UpdateStudentPanel updatePanel) {
+        this.manager = manager;
+        setLayout(new BorderLayout(10, 10));
+
+        // Table setup
+        String[] columns = {"ID", "Name", "Age", "Gender", "Department", "GPA"};
+        model = new DefaultTableModel(columns, 0);
+        table = new JTable(model);
+        table.setAutoCreateRowSorter(true); // enables sorting
+        add(new JScrollPane(table), BorderLayout.CENTER);
+
+        // Top panel with search
+        JPanel topPanel = new JPanel(new BorderLayout(5, 5));
+        searchField = new JTextField();
+        searchButton = new JButton("Search");
+        topPanel.add(new JLabel("Search by ID or Name:"), BorderLayout.WEST);
+        topPanel.add(searchField, BorderLayout.CENTER);
+        topPanel.add(searchButton, BorderLayout.EAST);
+        add(topPanel, BorderLayout.NORTH);
+
+        // Bottom panel with buttons
+        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        refreshButton = new JButton("Refresh");
+        deleteButton = new JButton("Delete Selected");
+        bottomPanel.add(refreshButton);
+        bottomPanel.add(deleteButton);
+        add(bottomPanel, BorderLayout.SOUTH);
+
+        // Load initial data
+        loadStudents();
+
+        // Row click loads student into update form
+        table.getSelectionModel().addListSelectionListener(event -> {
+            if (!event.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+                int selectedRow = table.getSelectedRow();
+                int id = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
+                updatePanel.loadStudentById(id);
+            }
+        });
+
+        // Refresh button
+        refreshButton.addActionListener(e -> loadStudents());
+
+        // Search button
+        searchButton.addActionListener(e -> {
+            String query = searchField.getText().trim();
+            if (query.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Please enter a search query.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            List<Student> results = manager.searchStudents(query);
+            model.setRowCount(0);
+            for (Student s : results) {
+                model.addRow(new Object[]{s.getId(), s.getName(), s.getAge(), s.getGender(), s.getDepartment(), s.getGpa()});
+            }
+            if (results.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "No matching students found.", "Info", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
+
+        // Delete button
+        deleteButton.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow == -1) {
+                JOptionPane.showMessageDialog(this, "Please select a student to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int id = Integer.parseInt(model.getValueAt(selectedRow, 0).toString());
+            int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete student with ID " + id + "?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                try {
+                    manager.deleteStudent(id);
+                    loadStudents();
+                    JOptionPane.showMessageDialog(this, "Student deleted successfully!", "Deleted", JOptionPane.INFORMATION_MESSAGE);
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    private void loadStudents() {
+        model.setRowCount(0); // clear old data
+        List<Student> students = manager.viewAllStudents();
+        for (Student s : students) {
+            model.addRow(new Object[]{
+                s.getId(), s.getName(), s.getAge(), s.getGender(), s.getDepartment(), s.getGpa()
+            });
+        }
+    }
+}
