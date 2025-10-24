@@ -6,10 +6,7 @@ package lab5;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
-import java.awt.Color;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 /**
  *
@@ -26,11 +23,11 @@ public class MainDashboardFrame extends JFrame{
         cardPanel.removeAll();
         cardPanel.setLayout(new CardLayout());
 
-        AddStudentPanel addStudent = new AddStudentPanel();
-        ViewStudentsPanel viewStudents = new ViewStudentsPanel();
-        UpdateStudentPanel updateStudent = new UpdateStudentPanel();
-        DeleteStudentPanel deleteStudent = new DeleteStudentPanel();
-        SearchStudentPanel searchStudent = new SearchStudentPanel();
+        addStudent = new AddStudentPanel();
+        viewStudents = new ViewStudentsPanel();
+        updateStudent = new UpdateStudentPanel();
+        deleteStudent = new DeleteStudentPanel();
+        searchStudent = new SearchStudentPanel();
          
         cardPanel.add(addStudent, "addStudent");
         cardPanel.add(viewStudents, "viewStudents");
