@@ -5,6 +5,7 @@
 package lab5;
 
 import javax.swing.*;
+
 import javax.swing.table.DefaultTableModel;
 //helps manage the data shown in the table
 import java.awt.*;
@@ -80,7 +81,7 @@ public class SearchStudentPanel extends JPanel {
         if (students == null) return;
         for (Student s : students) {
             tableModel.addRow(new Object[]{
-                s.getID(),
+                s.getId(),
                 s.getName(),
                 s.getAge(),
                 s.getGender(),
