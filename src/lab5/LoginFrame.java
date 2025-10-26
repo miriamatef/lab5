@@ -11,11 +11,12 @@ import javax.swing.*;
  * @author carol
  */
 public class LoginFrame extends JFrame{
-
+private StudentManager manager;
     /**
      * Creates new form LoginFrame
      */
-    public LoginFrame() {
+    public LoginFrame(StudentManager manager) {
+        this.manager=manager;
         initComponents();
     }
 
@@ -138,7 +139,7 @@ public class LoginFrame extends JFrame{
         if(userInput.equals(correctUsername)&& userPassword.equals(correctPassword)){
             JOptionPane.showMessageDialog(this, "Welcome to the student mangement system!");
             this.setVisible(false);
-            MainDashboardFrame mainWindow = new MainDashboardFrame();
+            MainDashboardFrame mainWindow = new MainDashboardFrame(manager);
             mainWindow.setVisible(true);
             
         }else{

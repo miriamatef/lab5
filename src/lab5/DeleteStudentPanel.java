@@ -13,15 +13,24 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DeleteStudentPanel extends javax.swing.JPanel {
 
+    
     /**
      * Creates new form deleteStudent
      */
-    private StudentManagerImpl manager = new StudentManagerImpl();
-    
-    public DeleteStudentPanel() {
+    private StudentManager manager;
+    public DeleteStudentPanel(StudentManager manager) {
         initComponents();
+        this.manager=(StudentManagerImpl) manager;
         loadStudentsToTable();
+
     }
+    @Override
+public void setVisible(boolean aFlag) {
+    super.setVisible(aFlag);
+    if (aFlag) {
+        loadStudentsToTable(); 
+    }
+}
      private void loadStudentsToTable() {
         DefaultTableModel model = (DefaultTableModel) studentsTable.getModel();
         model.setRowCount(0);

@@ -7,27 +7,29 @@ package lab5;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import javax.swing.JFrame;
-
 /**
  *
  * @author carol
- */
-        
+ */ 
 public class MainDashboardFrame extends JFrame{
-
+private StudentManager manager;
     /**
      * Creates new form MainDashboardFrame
      */
-    public MainDashboardFrame() {
+    public MainDashboardFrame(StudentManager manager) {
+        this.manager=manager;
         initComponents();
         cardPanel.removeAll();
         cardPanel.setLayout(new CardLayout());
 
-        addStudent = new AddStudentPanel();
-        viewStudents = new ViewStudentsPanel();
-        updateStudent = new UpdateStudentPanel();
-        deleteStudent = new DeleteStudentPanel();
-        searchStudent = new SearchStudentPanel();
+        addStudent = new AddStudentPanel(manager);
+        updateStudent = new UpdateStudentPanel(manager);
+        viewStudents = new ViewStudentsPanel(manager, (UpdateStudentPanel)updateStudent);
+        
+        deleteStudent = new DeleteStudentPanel(manager);
+        searchStudent = new SearchStudentPanel(manager);
+        javax.swing.JPanel blankPanel = new javax.swing.JPanel();
+      cardPanel.add(blankPanel, "blank");
          
         cardPanel.add(addStudent, "addStudent");
         cardPanel.add(viewStudents, "viewStudents");
@@ -38,7 +40,7 @@ public class MainDashboardFrame extends JFrame{
         getContentPane().setLayout(new BorderLayout());
         getContentPane().add(home, BorderLayout.NORTH);      
         getContentPane().add(cardPanel, BorderLayout.CENTER); 
-        ((CardLayout) cardPanel.getLayout()).show(cardPanel, "home");
+        ((CardLayout) cardPanel.getLayout()).show(cardPanel, "blank");
     }
 
 
@@ -58,8 +60,8 @@ public class MainDashboardFrame extends JFrame{
         updateButton = new javax.swing.JButton();
         deleteButton = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
-        addStudent = new javax.swing.JPanel();
         viewStudents = new javax.swing.JPanel();
+        addStudent = new javax.swing.JPanel();
         searchStudent = new javax.swing.JPanel();
         updateStudent = new javax.swing.JPanel();
         deleteStudent = new javax.swing.JPanel();
@@ -150,18 +152,21 @@ public class MainDashboardFrame extends JFrame{
         viewStudents.setLayout(viewStudentsLayout);
         viewStudentsLayout.setHorizontalGroup(
             viewStudentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGroup(viewStudentsLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(addStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 23, 23))
         );
         viewStudentsLayout.setVerticalGroup(
             viewStudentsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 281, Short.MAX_VALUE)
+            .addComponent(addStudent, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout updateStudentLayout = new javax.swing.GroupLayout(updateStudent);
         updateStudent.setLayout(updateStudentLayout);
         updateStudentLayout.setHorizontalGroup(
             updateStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 388, Short.MAX_VALUE)
+            .addGap(0, 405, Short.MAX_VALUE)
         );
         updateStudentLayout.setVerticalGroup(
             updateStudentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,11 +217,6 @@ public class MainDashboardFrame extends JFrame{
                     .addGap(0, 30, Short.MAX_VALUE)))
             .addGroup(cardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(cardPanelLayout.createSequentialGroup()
-                    .addGap(18, 18, 18)
-                    .addComponent(addStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(18, 18, 18)))
-            .addGroup(cardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(cardPanelLayout.createSequentialGroup()
                     .addContainerGap()
                     .addComponent(home, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addContainerGap()))
@@ -239,11 +239,6 @@ public class MainDashboardFrame extends JFrame{
                     .addContainerGap()))
             .addGroup(cardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(cardPanelLayout.createSequentialGroup()
-                    .addGap(12, 12, 12)
-                    .addComponent(addStudent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGap(12, 12, 12)))
-            .addGroup(cardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(cardPanelLayout.createSequentialGroup()
                     .addGap(123, 123, 123)
                     .addComponent(home, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(124, Short.MAX_VALUE)))
@@ -256,14 +251,14 @@ public class MainDashboardFrame extends JFrame{
             .addGroup(layout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(cardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(148, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addComponent(cardPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(73, Short.MAX_VALUE))
         );
 
         pack();

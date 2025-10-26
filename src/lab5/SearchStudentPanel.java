@@ -5,7 +5,6 @@
 package lab5;
 
 import javax.swing.*;
-
 import javax.swing.table.DefaultTableModel;
 //helps manage the data shown in the table
 import java.awt.*;

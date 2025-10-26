@@ -20,13 +20,13 @@ public class Student implements Serializable {
     private float gpa;
     
 //constructor
-    public Student(int id, String name, int age, String gender, String department, float gpa) {
+    public Student(int id, String name, int age, String gender, String department, double gpa) {
         this.id = id;
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.department = department;
-        this.gpa = gpa;
+        this.gpa = (float) gpa;
     }
 
     
