@@ -92,11 +92,7 @@ private int generateUniqueRandomId() {
     return id;
 }
 
-<<<<<<< Updated upstream
-//  Checks if a specific ID already exists in the student list
-=======
 // Checks if a specific ID already exists in the student list
->>>>>>> Stashed changes
 private boolean isIdUsed(int id) {
     // we’ll search through the studentManager’s existing students
     for (Student s : studentManager.searchStudents("")) { // empty string returns all students
