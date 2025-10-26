@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package lab5;
 
 import javax.swing.*; //this imports all Swing classes from javax.swing package
@@ -86,8 +83,25 @@ public class AddStudentPanel extends JPanel {
         //When the addButton is clicked, call the method onAdd()
     }
 
-    private static int nextGeneratedId = 1;
-    
+    //  Generates a random unique ID that doesn’t already exist
+private int generateUniqueRandomId() {
+    int id;
+    do {
+        id = (int) (Math.random() * 9000) + 1000; // random number between 1000–9999
+    } while (isIdUsed(id));
+    return id;
+}
+
+// Checks if a specific ID already exists in the student list
+private boolean isIdUsed(int id) {
+    // we’ll search through the studentManager’s existing students
+    for (Student s : studentManager.searchStudents("")) { // empty string returns all students
+        if (s.getId() == id) {
+            return true;
+        }
+    }
+    return false;
+}
     private void onAdd() {
         //reading what the user has typed 
         String idText = idField.getText().trim();
@@ -105,18 +119,22 @@ public class AddStudentPanel extends JPanel {
 
         //generate or read ID
         int id;
-        if (idText.isEmpty()){
-            id=nextGeneratedId++;
-        }else{
-            try {
-                id = Integer.parseInt(idText);
-                if (id < 0) throw new NumberFormatException();
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "ID must be a non-negative integer.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+    if (idText.isEmpty()) {
+        id = generateUniqueRandomId(); // generate a random unique one if left blank
+    } else {
+        try {
+            id = Integer.parseInt(idText);
+            if (id < 0) throw new NumberFormatException();
+            // check if the entered ID already exists
+            if (isIdUsed(id)) {
+                JOptionPane.showMessageDialog(this, "This ID already exists! Please choose another.", "Validation Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "ID must be a non-negative integer.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
         }
-
+    }
         int age;
         try {
             age = Integer.parseInt(ageText);
@@ -150,7 +168,8 @@ public class AddStudentPanel extends JPanel {
         }
     }
 
-    private void clearForm() { //After successfully adding a student, this resets the fields to empty.
+    private void clearForm() { 
+//After successfully adding a student, this resets the fields to empty.
         idField.setText("");
         nameField.setText("");
         ageField.setText("");
