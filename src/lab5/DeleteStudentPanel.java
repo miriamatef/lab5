@@ -58,7 +58,7 @@ public class DeleteStudentPanel extends javax.swing.JPanel {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Name", "Age", "Gender"
             }
         ));
         jScrollPane1.setViewportView(studentsTable);
