@@ -10,6 +10,7 @@ public class ViewStudentsPanel extends JPanel {
     private DefaultTableModel model;
     private JTextField searchField;
     private JButton refreshButton, searchButton, deleteButton;
+    private JComboBox<String> gpaFilterBox; 
     private StudentManager manager;
 
     public ViewStudentsPanel(StudentManager manager, UpdateStudentPanel updatePanel) {
@@ -97,6 +98,33 @@ public class ViewStudentsPanel extends JPanel {
     private void loadStudents() {
         model.setRowCount(0); // clear old data
         List<Student> students = manager.viewAllStudents();
+        for (Student s : students) {
+            model.addRow(new Object[]{
+                s.getId(), s.getName(), s.getAge(), s.getGender(), s.getDepartment(), s.getGpa()
+            });
+        }
+    }
+  
+    // GPA filter
+    private void applyGpaFilter(String filter) {
+        List<Student> students = manager.viewAllStudents();
+        model.setRowCount(0);
+
+        switch (filter) {
+            case "GPA ≥ 3.0":
+                students.removeIf(s -> s.getGpa() < 3.0);
+                break;
+            case "GPA < 2.0":
+                students.removeIf(s -> s.getGpa() >= 2.0);
+                break;
+            case "Sort by GPA Descending":
+                students.sort((a, b) -> Float.compare(b.getGpa(), a.getGpa()));
+                break;
+            default:
+                // Show all students
+                break;
+        }
+
         for (Student s : students) {
             model.addRow(new Object[]{
                 s.getId(), s.getName(), s.getAge(), s.getGender(), s.getDepartment(), s.getGpa()
