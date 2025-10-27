@@ -16,11 +16,8 @@ public class main {
                     manager.addStudent(new Student(2, "Bob Smith", 22, "Male", "IT", 3.2f));
                     manager.addStudent(new Student(3, "Carol White", 19, "Female", "Math", 3.9f));
                 } catch (Exception e) {
-<<<<<<< Updated upstream
-                    System.out.println("⚠ Some sample students might already exist: " + e.getMessage());
-=======
+
                     System.out.println(" Some sample students might already exist: " + e.getMessage());
->>>>>>> Stashed changes
                 }
 
                 // Show login first
