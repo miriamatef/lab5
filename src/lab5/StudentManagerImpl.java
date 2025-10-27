@@ -101,7 +101,7 @@ public class StudentManagerImpl implements StudentManager {
     private void validateStudentData(String name, int age, String gender, String department, float gpa) throws Exception {
         if (name == null || name.trim().isEmpty()) throw new Exception("Name cannot be empty.");
         if (department == null || department.trim().isEmpty()) throw new Exception("Department cannot be empty.");
-        if (age <= 0) throw new Exception("Age must be greater than 0.");
+        if (age <= 16) throw new Exception("Age must be greater than 16.");
         if (!(gender.equalsIgnoreCase("Male") || gender.equalsIgnoreCase("Female")))
             throw new Exception("Gender must be 'Male' or 'Female'.");
         if (gpa < 0.0 || gpa > 4.0) throw new Exception("GPA must be between 0.0 and 4.0.");
