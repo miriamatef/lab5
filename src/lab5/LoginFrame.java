@@ -132,8 +132,8 @@ public class LoginFrame extends JFrame{
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         String correctUsername="admin";
         String correctPassword="0000";
-        String userInput = usernameField.getText();
-        char [] userPassArray = passwordField.getPassword();//ask why array
+        String userInput = usernameField.getText().trim();
+        char [] userPassArray = passwordField.getPassword();
         String userPassword = new String(userPassArray);
         if(userInput.equals(correctUsername)&& userPassword.equals(correctPassword)){
             JOptionPane.showMessageDialog(this, "Welcome to the student mangement system!");
