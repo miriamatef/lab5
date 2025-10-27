@@ -10,7 +10,7 @@ public class ViewStudentsPanel extends JPanel {
     private DefaultTableModel model;
     private JTextField searchField;
     private JButton refreshButton, searchButton, deleteButton;
-    private JComboBox<String> gpaFilterBox; 
+    private JComboBox<String> gpaFilterBox; // ✅ added
     private StudentManager manager;
 
     public ViewStudentsPanel(StudentManager manager, UpdateStudentPanel updatePanel) {
