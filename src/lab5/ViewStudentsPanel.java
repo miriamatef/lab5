@@ -10,35 +10,27 @@ public class ViewStudentsPanel extends JPanel {
     private DefaultTableModel model;
     private JTextField searchField;
     private JButton refreshButton, searchButton, deleteButton;
-    private JComboBox<String> gpaFilterBox; // ✅ added
+    private JComboBox<String> gpaFilterBox; 
     private StudentManager manager;
 
     public ViewStudentsPanel(StudentManager manager, UpdateStudentPanel updatePanel) {
         this.manager = manager;
         setLayout(new BorderLayout(10, 10));
 
-        //GPA filter options
-        String[] gpaFilters = {"All Students", "GPA ≥ 3.0", "GPA < 2.0", "Sort by GPA Descending"};
-        gpaFilterBox = new JComboBox<>(gpaFilters);
-
-        //Table setup
+        // Table setup
         String[] columns = {"ID", "Name", "Age", "Gender", "Department", "GPA"};
         model = new DefaultTableModel(columns, 0);
         table = new JTable(model);
         table.setAutoCreateRowSorter(true); // enables sorting
         add(new JScrollPane(table), BorderLayout.CENTER);
 
-        //Top panel with search + GPA filter
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        searchField = new JTextField(15);
+        // Top panel with search
+        JPanel topPanel = new JPanel(new BorderLayout(5, 5));
+        searchField = new JTextField();
         searchButton = new JButton("Search");
-
-        topPanel.add(new JLabel("Search by ID or Name:"));
-        topPanel.add(searchField);
-        topPanel.add(searchButton);
-        topPanel.add(new JLabel(" | Filter:"));
-        topPanel.add(gpaFilterBox);
-
+        topPanel.add(new JLabel("Search by ID or Name:"), BorderLayout.WEST);
+        topPanel.add(searchField, BorderLayout.CENTER);
+        topPanel.add(searchButton, BorderLayout.EAST);
         add(topPanel, BorderLayout.NORTH);
 
         // Bottom panel with buttons
@@ -101,9 +93,6 @@ public class ViewStudentsPanel extends JPanel {
                 }
             }
         });
-
-        //GPA filter dropdown listener
-        gpaFilterBox.addActionListener(e -> applyGpaFilter((String) gpaFilterBox.getSelectedItem()));
     }
 
     private void loadStudents() {
@@ -115,7 +104,7 @@ public class ViewStudentsPanel extends JPanel {
             });
         }
     }
-
+  
     // GPA filter
     private void applyGpaFilter(String filter) {
         List<Student> students = manager.viewAllStudents();

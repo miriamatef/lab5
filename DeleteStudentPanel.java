@@ -67,7 +67,7 @@ public void setVisible(boolean aFlag) {
                 {null, null, null, null}
             },
             new String [] {
-                "ID", "Name", "Age", "Gender"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
         jScrollPane1.setViewportView(studentsTable);

@@ -1,0 +1,5 @@
+1,Alice Johnson,20,Female,CS,3.5
+2,Bob Smith,22,Male,IT,3.2
+3,Carol White,19,Female,Math,3.9
+123,mariam,19,Female,maths,3.6
+3991,ym,21,Male,cs,3.1

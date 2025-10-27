@@ -80,7 +80,7 @@ public class SearchStudentPanel extends JPanel {
         if (students == null) return;
         for (Student s : students) {
             tableModel.addRow(new Object[]{
-                s.getID(),
+                s.getId(),
                 s.getName(),
                 s.getAge(),
                 s.getGender(),
